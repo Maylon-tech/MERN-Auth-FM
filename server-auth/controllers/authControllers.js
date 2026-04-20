@@ -21,6 +21,64 @@ export const registerUser = asyncHandler(async (req, res) => {
         throw new Error("Username or Email already exist.")
     }
 
-    const hashedPassword = await
+    const hashedPassword = await bcrypt.hash(password, 10)
+    const user = await User.create({
+        username,
+        email,
+        password: hashedPassword,
+    })
+
+    const token = generateToken(user)
+
+    res.status(201).json({
+        success: true,
+        message: "user registered successfully.",
+        data: {
+            token,
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+            }
+        }
+    })
     
+})
+
+export const loginUser = asyncHandler(async (req, res) => {
+    const { email, password } = req.body
+    if (!email || !password) {
+        res.status(400)
+        throw new Error("Email and password are required")
+    }
+
+    const user = await User.findOne({ email }).select("+password")
+
+    if (!user) {
+        res.status(401)
+        throw new Error("Invalid email or password.")
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password)
+
+    if (!isMatch) {
+        res.status(401)
+        throw new Error("Invalid email or password")
+    }
+
+    const token = generateToken(user)
+    res.status(200).json({ 
+        success: true,
+        message: "Login Successful",
+        data: {
+            token,
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email,
+            }
+        }
+    })
+
+
 })
