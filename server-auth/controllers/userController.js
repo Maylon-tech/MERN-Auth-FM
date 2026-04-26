@@ -1,4 +1,4 @@
-import asyncHandler from "../utils/asyncHandler"
+import asyncHandler from "../utils/asyncHandler.js"
 
 export const getUserProfile = asyncHandler(async (req, res) => {
     res.status(200).json({
