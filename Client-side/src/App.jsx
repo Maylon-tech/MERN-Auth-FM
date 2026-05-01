@@ -1,8 +1,9 @@
-import { Navigate, BrowserRouter as Route, Router, Routes } from "react-router-dom"
+import { Navigate, BrowserRouter as Router, Route, Routes } from "react-router-dom"
 
 import Dashboard from "./pages/Dashboard"
 import Auth from "./pages/Auth"
 import ProtectedRoute from "./components/ProtectedRoute"
+import Analytics from "./pages/Analytics"
 
 function App() {
 
@@ -12,7 +13,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/auth" />} />
         <Route path="/auth" element={<Auth />} />
-        
+        <Route
+          path="/analytics"
+          element={
+            <ProtectedRoute>
+              <Analytics />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/dashboard"
           element={
