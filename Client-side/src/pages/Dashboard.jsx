@@ -1,6 +1,6 @@
 import { useContext, useState } from "react"
 import { AuthContext } from "../context/AuthContext"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { HiOutlineViewGrid, HiOutlineChartBar, HiOutlineUserCircle, HiOutlineLogout } from 'react-icons/hi'
 import { SiFramer, SiInfracost, SiReact, SiTailwindcss } from "react-icons/si"
 
@@ -18,16 +18,19 @@ const Dashboard = () => {
     {
       id: "overview",
       label: "Overview",
+      url:"/overview",
       icon: <HiOutlineViewGrid />
     },
     {
       id: "analytics",
       label: "Analytics",
+      url:"/analytics",
       icon: <HiOutlineChartBar />
     },
     {
       id: "profile",
       label: "Profile",
+      url:"/profile",
       icon: <HiOutlineUserCircle />
     },
   ]
@@ -36,14 +39,17 @@ const Dashboard = () => {
     <div className="min-h-screen bg-[#0a0a0a] text-zinc-100 flex font-sans selection:bg-[#ffe600] selection:text-black">
       <aside className="w-64 border-r border-[#292929] bg-[#121212]/50 backdrop-blur-xl hidden md:flex flex-col p-6">
         <div className="flex items-center gap-3 mb-12">
-          <SiInfracost className="text-[#ffe600] text-3xl" />
-          <span className="font-bold tracking-widest text-xl">COSMO</span>
+          <Link to="/dashboard">
+            <SiInfracost className="text-[#ffe600] text-3xl" />
+            <span className="font-bold tracking-widest text-xl">Budget Dash</span>
+          </Link>
         </div>
 
         <nav className="flex-1 space-y-2">
           {
             navItems.map((item) => (
-              <button
+              <Link
+                to={item.url}
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
                 className={`w-full flex items-center gap-4 py-3 rounded-lg transition-all ${
@@ -54,7 +60,7 @@ const Dashboard = () => {
               >
                 <span className="text-xl">{item.icon}</span>
                 <span className="text-sm tracking-wide">{item.label}</span>
-              </button>
+              </Link>
             ))
           }
         </nav>

@@ -10,16 +10,14 @@ import Image from "../assets/hero.png"
 const Auth = () => {
   const { login, register } = useContext(AuthContext)
   const navigate = useNavigate()
-
-  const [isLogin, setIsLogin] = useState(true)
-
+ 
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-
-  const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
 
+  const [isLogin, setIsLogin] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
   const handleSubmit = async (e) => {
